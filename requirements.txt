@@ -1,5 +1,9 @@
 django
+djangorestframework
 psycopg2-binary
 requests
 python-dotenv
 gspread
+celery
+redis
+celery[redis]

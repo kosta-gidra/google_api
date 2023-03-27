@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 
-from sheets.views import ReadSheetView
+from sheets.views import GetCurrency, GetOrders
+
+router = DefaultRouter()
+
+router.register('currency', GetCurrency)
+router.register('orders', GetOrders)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('read/', ReadSheetView.as_view(), name='read-sheet')
-]
+] + router.urls
