@@ -1,7 +1,7 @@
-import logging
 from datetime import datetime, timedelta
-
 import gspread
+
+from google_api import settings
 from google_api.celery import app
 from sheets.models import Currency, Order
 from sheets.views import get_current_course
@@ -20,7 +20,7 @@ def get_google_sheet():
 
     # получение данных из google sheet
     ser_acc = gspread.service_account(filename='credential.json')
-    sheet = ser_acc.open('canalservice').sheet1
+    sheet = ser_acc.open(settings.SHEET_NAME).sheet1
 
     # обновление БД из google sheet
     for order in sheet.get_all_records():
@@ -29,7 +29,7 @@ def get_google_sheet():
                                                           'coast_cents': order['стоимость,$'] * 100,
                                                           'delivery_date':
                                                               datetime.strptime(order['срок поставки'], '%d.%m.%Y'),
-                                                          'coast_rub': order['стоимость,$'] * course.usd * 100,
+                                                          'coast_cop': order['стоимость,$'] * course.usd * 100,
                                                           'status': 'active',
                                                           'last_update': datetime.now()
                                                       })

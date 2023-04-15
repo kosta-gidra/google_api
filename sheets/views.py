@@ -11,7 +11,7 @@ def get_current_course():
     """Получить текущий курс доллара к рублю"""
 
     try:
-        get_xml = requests.get('http://www.cbr.ru/scripts/XML_daily.asp')
+        get_xml = requests.get("http://www.cbr.ru/scripts/XML_daily.asp")
         structure = ET.fromstring(get_xml.content)
         dollar = structure.find("./*[@ID='R01235']/Value")
         dollar_float = float(dollar.text.replace(',', '.'))

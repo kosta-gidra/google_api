@@ -9,31 +9,37 @@
 ---
 
 ## Документация по проекту
+Предварительная настройка: 
+1. Создать копию Google таблицы, указанной выше. Если используется другое имя таблицы, указать его в поле _SHEET_NAME_.
+2. Создать service account, сгенерировать ключ(через Manage keys) и сохранить его в формате json в корень проекта 
+как _credential.json_ (смотри пример файла).
+3. Открыть доступ для чтения таблицы созданному аккаунту.
+4. В проекте используются переменные окружения. В рабочей дирректории необходимо создать файл .env с полями:
 
-В проекте используются переменные окружения. В рабочей дирректории необходимо создать файл .env с полями:
+    ```
+    PG_USER=
+    PG_PASSWORD=
+    ```
+    При необходимости можно указать следующие поля (иначе будут использованы настройки по умолчанию):
 
-```
-PG_USER=
-PG_PASSWORD=
-```
-При необходимости можно указать следующие поля (иначе будут использованы настройки по умолчанию):
-
-```
-SECRET_KEY=
-DEBUG=
-ALLOWED_HOSTS=
-PG_PORT=
-PG_HOST=
-```
+    ```
+    SECRET_KEY=
+    DEBUG=
+    ALLOWED_HOSTS=
+    PG_PORT=
+    PG_HOST=
+    SHEET_NAME=
+    ```
+   
 ### Для запуска проекта необходимо выполнить команды:
 
 ```bash
 pip install -r requirements.txt
-docker compose up
+docker compose up -d
 python manage.py makemigrations
 python manage.py migrate
-celery -A google_api worker --loglevel=debug --concurrency=4
-celery -A google_api beat
+celery -A google_api worker --loglevel=debug 
+celery -A google_api beat 
 python manage.py runserver
 ```
 ---

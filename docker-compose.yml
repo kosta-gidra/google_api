@@ -4,7 +4,6 @@ services:
 
   pg_db:
     image: postgres:14.3-alpine3.15
-    container_name: pg_db
     ports:
       - "5431:5432"
     env_file:

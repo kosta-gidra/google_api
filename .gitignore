@@ -152,3 +152,4 @@ cython_debug/
 .idea/
 tests/
 /doc_for_me.txt
+/credential.json
